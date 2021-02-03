@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Client List Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div id="logoutDiv">
+        <form action="#" method="POST">
+            <button type="submit" class="btn btn-secondary float-lg-right"><a id="logout" th:href="@{/logout}">Logout</a></button>
+        </form>
+    </div>
+    <div id="contentDiv" style="clear: right;">
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <div class="table-responsive">
+                <table class="table table-striped" id="fileTable">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%" scope="col"></th>
+                        <th style="width: 20%" scope="col">Client Id</th>
+                        <th style="width: 30%" scope="col">Client Name</th>
+                        <th style="width: 20%" scope="col">Client Role</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="client : ${clients}">
+                        <td>
+                            <button id="edit-Cred" type="button" class="btn btn-success" onclick="showCredentialModal(this.getAttribute('data-clientId'), this.getAttribute('data-clientName'), this.getAttribute('data-role'), this.getAttribute('data-secret'), this.getAttribute('data-wallet'))"
+                                    th:data-clientId="${client.clientId}"
+                                    th:data-clientName="${client.clientName}"
+                                    th:data-role="${client.role}"
+                                    th:data-secret="${client.secret}"
+                                    th:data-wallet="${client.address}"
+                            >Edit</button>
+                            <a id="DeleteCred" th:href="@{client/delete/{clientId}(clientId = ${client.clientId})}" class="btn btn-danger">Delete</a>
+                        </td>
+                        <th th:text="*{client.clientId}" scope="row">Client Id</th>
+                        <th th:text="*{client.clientName}" scope="row">Client name</th>
+                        <th th:text="*{client.role}" scope="row">Client Role</th>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+                <div class="modal fade" id="credentialModal" tabindex="-1" role="dialog" aria-labelledby="credentialModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="credentialModalLabel">Credential</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <!--The Form to add the new Credential-->
+                                <form th:action="@{/client/management/update}" action="#" method="POST">
+                                    <input type="hidden" name="credentialId" id="credential-id">
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">ClientId</label>
+                                        <input type="text" name= "clientId" class="form-control" id="clientId" maxlength="100" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">clientName</label>
+                                        <input type="text" name= "clientName" class="form-control" id="clientName" maxlength="30" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Client-Role</label>
+                                        <input type="text" name= "clientId" class="form-control" id="client-role" maxlength="100" required disabled>                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">Client-Secret</label>
+                                        <input type="text" name= "clientId" class="form-control" id="client-secret" maxlength="100" required disabled>                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">client-wallet</label>
+                                        <input type="text" name= "clientId" class="form-control" id="client-wallet" maxlength="100" required disabled>                                    </div>
+
+                                    <button id="clientCreate" type="submit" class="d-none" hidden></button>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <!--                                <button  id="SaveCred" type="button" class="btn btn-primary" onclick="$('#clientCreate').click();">Save changes</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--For opening the note modal-->
+<script type="text/javascript">
+    function showCredentialModal(clientId, clientName, role, secret, wallet) {
+        $('#clientId').val(clientId ? clientId : '');
+        $('#clientName').val(clientName ? clientName : '');
+        $('#client-role').val(role ? role : '');
+        $('#client-secret').val(secret ? secret : '');
+        $('#client-wallet').val(wallet ? wallet : '');
+        $('#credentialModal').modal('show');
+    }
+</script>
+
+</body>
+</html>

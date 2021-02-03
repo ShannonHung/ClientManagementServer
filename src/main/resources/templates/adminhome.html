@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Client List Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div id="logoutDiv">
+        <form action="#" method="POST">
+            <button type="submit" class="btn btn-secondary float-lg-right"><a id="logout" th:href="@{/logout}">Logout</a></button>
+        </form>
+    </div>
+    <div id="contentDiv" style="clear: right;">
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <div class="table-responsive">
+                <table class="table table-striped" id="fileTable">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%" scope="col"></th>
+                        <th style="width: 20%" scope="col">User Id</th>
+                        <th style="width: 30%" scope="col">User Name</th>
+                        <th style="width: 20%" scope="col">User Role</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <th th:text="*{user.id}" scope="row">User Id</th>
+                        <th th:text="*{user.username}" scope="row">User name</th>
+                        <th th:text="*{user.role}" scope="row">User Role</th>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
