@@ -16,7 +16,7 @@ spring:
 
 # Server port is arbitrary
 server:
-  port: 12345
+  port: 23456
   servlet:
     encoding:
       charset: UTF-8

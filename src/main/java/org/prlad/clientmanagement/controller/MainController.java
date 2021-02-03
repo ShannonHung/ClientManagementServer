@@ -51,10 +51,10 @@ public class MainController {
             model.addAttribute("users", userService.findAll());
             return "adminhome";
         }else if(auth.getAuthorities().toString().contains(Role.ROLE_MEMBER)){
-//            model.addAttribute("clients", userService.findByUsername(auth.getName()).get().getClientSet());
-//            System.out.println("[client service findall] => " + userService.findByUsername(auth.getName()).get().getClientSet());
-//            return "userhome";
-            return "adminhome";
+            model.addAttribute("clients", userService.findByUsername(auth.getName()).get().getClientSet());
+            System.out.println("[client service findall] => " + userService.findByUsername(auth.getName()).get().getClientSet());
+            return "userhome";
+//            return "adminhome";
         }else{
             log.error("no role here");
             return "login";
